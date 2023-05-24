@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  ConnectKitButton as ConnectionButton,
-  ConnectKitProvider as Provider,
-  getDefaultClient,
-} from "connectkit";
+import { ConnectKitProvider as Provider, getDefaultClient } from "connectkit";
 import { createClient, WagmiConfig } from "wagmi";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-const ConnectKitButton = () => {
-  return <ConnectionButton />;
-};
+const queryClient = new QueryClient();
 
 const client = createClient(
   getDefaultClient({
@@ -27,4 +22,12 @@ const ConnectKitProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export { ConnectKitButton, ConnectKitProvider };
+const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <ConnectKitProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </ConnectKitProvider>
+  );
+};
+
+export default ProviderWrapper;

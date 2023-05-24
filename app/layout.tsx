@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { ConnectKitProvider, ConnectKitButton } from "@/components/connectkit";
+import Providers from "@/components/providers";
+import WalletButton from "@/components/wallet-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +14,7 @@ function Header() {
   return (
     <header className="flex items-center justify-between px-4 py-4 bg-gray-100 border-b border-gray-200">
       <h1 className="text-xl font-bold text-gray-900">Axilar AI Agent</h1>
-      <ConnectKitButton />
+      <WalletButton />
     </header>
   );
 }
@@ -26,10 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ConnectKitProvider>
+        <Providers>
           <Header />
           {children}
-        </ConnectKitProvider>
+        </Providers>
       </body>
     </html>
   );
