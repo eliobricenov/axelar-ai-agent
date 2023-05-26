@@ -6,10 +6,10 @@ and automatically bridges the assets from one chain to another.
 The bridged assets are sent to the same address in the destination chain.
 
 ### Example prompt
-    
-    
-    "Send 1000 aUSDC from ethereum-2 to Polygon"
-    "Transfer 1000 USDC from Ethereum to Avalance"
+```
+Send 1000 aUSDC from ethereum-2 to Polygon
+Transfer 1000 USDC from Ethereum to Avalance
+```
 
 
 ### Considerations
