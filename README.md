@@ -1,1 +1,1 @@
-https://axilar-ai-agent.vercel.app/
+https://axelar-ai-agent.vercel.app/
