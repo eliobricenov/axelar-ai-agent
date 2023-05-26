@@ -7,20 +7,45 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BellRing } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useState } from "react";
 import { cn } from "@/lib/utils";
+import { triggerTransaction } from "@/lib/triggerTransaction";
+import { useSigner } from "wagmi";
+import { StatusResponse } from "@0xsquid/sdk";
+import { toast } from "react-toastify";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   preview: TransferPreview;
+  onSuccess: (receipt: StatusResponse) => void;
 }
 
 export default function TransferPreview({
   preview,
   className,
+  onSuccess,
   ...props
 }: Props) {
+  const { data: signer } = useSigner();
+  const [loading, setLoading] = useState(false);
+
+  const handleExecute = async () => {
+    if (!signer) return;
+    try {
+      setLoading(true);
+      const result = await triggerTransaction({
+        signer,
+        transferPreview: preview,
+      });
+      onSuccess(result);
+    } catch (e) {
+      toast.error("Something went wrong, see the console for more info :)");
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
       <CardHeader>
@@ -44,7 +69,9 @@ export default function TransferPreview({
         </p>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">EXECUTE</Button>
+        <Button className="w-full" onClick={handleExecute} disabled={loading}>
+          EXECUTE
+        </Button>
       </CardFooter>
     </Card>
   );

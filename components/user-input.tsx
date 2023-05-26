@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { FormEvent } from "react";
 
 export default function UserInput({
+  loading,
   onSubmit,
 }: {
   onSubmit: (input: string) => void;
+  loading: boolean;
 }) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +29,9 @@ export default function UserInput({
         type="text"
         placeholder="Send 1000 USDC from Avalanche to Polygon"
       />
-      <Button type="submit">Submit</Button>
+      <Button disabled={loading} type="submit">
+        Submit
+      </Button>
     </form>
   );
 }
